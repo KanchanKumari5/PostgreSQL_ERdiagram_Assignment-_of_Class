@@ -136,38 +136,86 @@ VALUES('create()','get','jhdfjkda',11),
 
 11 Query to get list of project and its module and API
 
-select p.pname,m.mname,a.apiname
-from project p join modules m on p.pid=m.pid
-join api a on m.mid=a.mid;
+SELECT p.pname,m.mname,a.apiname
+FROM project p JOIN modules m ON p.pid=m.pid
+JOIN api a on m.mid=a.mid;
 
 12 Query to get list of API with project name
 
-select p.project_title,a.api_method
-from project p join APIs a on p.project_id =a.project_id;
+SELECT p.project_title,a.api_method
+FROM project p join APIs a on p.project_id =a.project_id;
 
 
 13 Query to get total number of APIs module wise
 
+SELECT m.module_title,count(a.api_url)
+FROM project p JOIN modules m ON p.project_id=m.project_id
+join APIs a ON m.module_id=a.module_id
+GROUP BY m.module_title;
+
 14 Query to get total number of APIs project wise
+
+SELECT a.api_title,count(a.api_title)
+FROM project p JOIN modules m ON p.project_id=m.project_id
+JOIN APIs a ON m.module_id=a.module_id
+GROUP BY a.apiname;
 
 15 Query to get list of user  with user Address
 
+SELECT u.user_fname,u.user_lname,a.user_address1,a.uaddress2
+from user u JOIN user_address a on u.user_id=a.user_id;
+
 16 Query to get list of project assigned to particular user
+
+select pj.pname
+from p_user u join project pj on u.uid=pj.uid
+where ufname='Pratik';
 
 17 Query to search project with project title using LIKE
 
+SELECT project_name FROM project 
+WHERE pname LIKE '%jec%';
+
 19 Query to get user list who have same country
+
+SELECT u.user_fname,u.user_lname,a.user_country
+FROM users u JOIN user_address a on u.user_id=a.user_id
+group by ua.ucountry;
 
 20 Query to get user list by zipcode
 
+SELECT u.user_fname,u.user_lname 
+FROM users u JOIN user_address a ON u.user_id = a.user_id
+WHERE a.user_zip = 206309;
+
 21 Query to get list of API whose method is POST
+
+SELECT * FROM APIs
+where api_method = 'post';
 
 22 Query to get list of API whose method is PUT
 
+SELECT * FROM APIs
+where api_method = 'put';
+
 23 Query to get list of API whose method is DELETE
+
+SELECT * FROM APIs
+where api_method = 'delete';
 
 24 Query to get list of API whose method is GET
 
+SELECT * FROM APIs
+where api_method = 'get';
+	
+
 25 Query to get list of API for specific module
 
+SELECT a.api_url
+FROM APIs a JOIN module m ON a.module_id = a.module_id;
+
 26 Query to get  list of module for specific project
+
+SELECT m.module_title
+FROM modules m JOIN project p ON p.project_id=m.project_id;
+WHERE p.project_title='project1';
