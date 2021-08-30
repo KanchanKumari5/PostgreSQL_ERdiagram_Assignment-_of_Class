@@ -1,0 +1,173 @@
+1 Create  all tables related to API project.
+
+CREATE TABLE users(
+	user_id SERIAL PRIMARY KEY,
+	user_fname VARCHAR(30),
+	user_lname VARCHAR(30) NOT NULL,
+	user_profilepic VARCHAR(50),
+	user_gender CHAR(1),
+	user_email VARCHAR(50) UNIQUE NOT NULL
+);
+CREATE TABLE user_address
+(
+	user_address_id SERIAL PRIMARY KEY,
+	user_address1 VARCHAR(50),
+	user_address2 VARCHAR(50),
+	user_city VARCHAR(50),
+	user_state VARCHAR(30),
+	user_zip INT,
+	user_country VARCHAR(30),
+	user_id INT REFERENCES users(user_id)
+);
+CREATE TABLE project
+(
+	project_id SERIAL PRIMARY KEY,
+	project_title VARCHAR(30),
+	project_description VARCHAR(100),
+	project_logo varchar(50),
+	user_id INT REFERENCES users(user_id)
+);
+CREATE TABLE modules
+(
+	module_id SERIAL PRIMARY KEY,
+	module_description VARCHAR(50),
+	module_title VARCHAR(30),
+	user_id INT REFERENCES users(user_id),
+	project_id INT REFERENCES project(project_id)
+);
+CREATE TABLE APIs
+(
+	api_id SERIAL PRIMARY KEY,
+	api_url VARCHAR(50),
+	api_method VARCHAR(30),
+	api_description VARCHAR(50),
+	user_id INT REFERENCES users(user_id),
+	project_id INT REFERENCES project(project_id)
+);
+2 Insert at leat 10 records in each table
+
+INSERT INTO users(user_fname,user_lname,user_profilepic,user_gender,user_email)
+VALUES('Kanchan','Kumari','D:\Documents\KanchanKumari','F','kanchan@gmail.com'),
+('Pallavi','Jain','D:\Documents\Pallavi','F','pallavi@gmail.com'),
+('Prajakta','Kumari','D:\Documents\Prajakta','F','prajakta@gmail.com'),
+('Amitesh','Kumar','D:\Documents\Amitesh','M','Amitesh@gmail.com'),
+('pratik','Kumar','D:\Documents\pratik','M','pratik@gmail.com'),
+('Riya','Jain','D:\Documents\Riya','M','Riya@gmail.com'),	
+('Krishna','Jain','D:\Documents\Krishna','M','Krishna@gmail.com'),
+('Ameya','Jain','D:\Documents\Ameya','M','Ameya@gmail.com'),
+('Swanand','Jain','D:\Documents\Swanand','M','Swanand@gmail.com'),
+('Husain','Jain','D:\Documents\Husain','M','Husain@gmail.com');
+
+INSERT INTO user_address(user_address1,user_address2,user_city,user_state,user_zip,user_country,user_id)
+VALUES('Nehru nagar','Shiv colony','Sumerpur','Rajasthan',206309,'India',11),
+('a nagar','a colony','Takhtgar','Rajasthan',745824,'America',12),
+('b nagar','b colony','Sheogang','Panjab',624675,'India',11),
+('c nagar','c colony','Pali','Rajasthan',206456,'Newzland',13),
+('d nagar','d colony','Bhinmal','Rajasthan',654309,'India',14),
+('e nagar','e colony','Surohi','Panjab',204569,'Shrilanka',12),
+('f nagar','f colony','Khivandi','Rajasthan',256309,'Afrika',11),
+('g nagar','g colony','Posaliya','Bihar',256409,'India',15),
+('h nagar','h colony','Lunava','Maharashtra',234309,'India',16),
+('i nagar','i colony','Madri','Karnataka',259566,'India',17);
+
+INSERT INTO project(project_title,project_description,project_logo,user_id)
+VALUES('project1','project is','logo1',11),
+('project2','abcd','logo2',12),
+('project3','xyz','logo3',13),
+('project4','abcde','logo4',11),
+('project5','abcdef','logo5',14),
+('project6','jklm','logo6',15),
+('project7','asdf','logo7',16),
+('project8','abcd','logo8',17),
+('project9','fasdf','logo9',18),
+('project10','fsdf','logo10',19);
+
+INSERT INTO modules(module_description,user_id,module_title)
+VALUES('abc',11,'admin'),
+('abcd',12,'user'),
+('abcde',11,'customer'),
+('abcdef',13,'admin'),
+('abcgh',14,'admin'),
+('abcij',12,'admin'),
+('klabc',16,'user'),
+('mnabc',17,'admin'),
+('opabc',18,'customer'),
+('qrabc',18,'admin');
+
+INSERT INTO APIs(api_url,api_method,api_description,user_id)
+VALUES('create()','get','jhdfjkda',11),
+('update()','get','jhdfjkda',12),
+('delete()','post','jhdfjkda',11),
+('search()','get','jhdfjkda',13),
+('create()','get','jhdfjkda',14),
+('update()','post','jhdfjkda',12),
+('search()','get','jhdfjkda',16),
+('create()','post','jhdfjkda',17),
+('update()','get','jhdfjkda',18),
+('delete()','post','jhdfjkda',18);
+
+3 Apply FK,PK,UNIQUE KEY, NOT NULL , NULL constraints.
+
+	done
+
+4 Apply Data Type
+
+	done
+
+6 Query to get list of project.
+
+	select * from project;
+
+7 Query to get list of module
+
+	select * from modules;
+
+8 Query to get list API
+
+	select * from APIs;
+
+9 Query to get list for user
+
+	select * from users;
+
+10 Qery to get list address
+
+	select * from user_address;
+
+11 Query to get list of project and its module and API
+
+select p.pname,m.mname,a.apiname
+from project p join modules m on p.pid=m.pid
+join api a on m.mid=a.mid;
+
+12 Query to get list of API with project name
+
+select p.project_title,a.api_method
+from project p join APIs a on p.project_id =a.project_id;
+
+
+13 Query to get total number of APIs module wise
+
+14 Query to get total number of APIs project wise
+
+15 Query to get list of user  with user Address
+
+16 Query to get list of project assigned to particular user
+
+17 Query to search project with project title using LIKE
+
+19 Query to get user list who have same country
+
+20 Query to get user list by zipcode
+
+21 Query to get list of API whose method is POST
+
+22 Query to get list of API whose method is PUT
+
+23 Query to get list of API whose method is DELETE
+
+24 Query to get list of API whose method is GET
+
+25 Query to get list of API for specific module
+
+26 Query to get  list of module for specific project
